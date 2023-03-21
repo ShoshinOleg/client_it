@@ -3,7 +3,8 @@ import 'package:client_it/app/ui/main_app_runner.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final runner = MainAppRunner();
+  const env = String.fromEnvironment("env", defaultValue: "dev");
+  const runner = MainAppRunner(env);
   final builder = MainAppBuilder();
   runner.run(builder);
 }
