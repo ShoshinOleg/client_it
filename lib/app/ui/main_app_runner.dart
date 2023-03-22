@@ -4,9 +4,10 @@ import 'package:client_it/app/domain/app_runner.dart';
 import 'package:flutter/cupertino.dart';
 
 class MainAppRunner implements AppRunner {
-  final String env;
 
   const MainAppRunner(this.env);
+
+  final String env;
 
   @override
   Future<void> preloadData() async {

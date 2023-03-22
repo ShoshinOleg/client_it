@@ -18,9 +18,10 @@ class MainAppBuilder implements AppBuilder {
 }
 
 class _GlobalProviders extends StatelessWidget {
-  final Widget child;
 
   const _GlobalProviders({Key? key, required this.child}) : super(key: key);
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

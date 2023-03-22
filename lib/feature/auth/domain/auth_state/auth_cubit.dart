@@ -9,7 +9,7 @@ part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthState> {
 
-  final AuthRepository authRepository;
-
   AuthCubit(this.authRepository): super(const AuthState.notAuthorized());
+
+  final AuthRepository authRepository;
 }
