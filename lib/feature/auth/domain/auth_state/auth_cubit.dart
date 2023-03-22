@@ -12,4 +12,20 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepository): super(const AuthState.notAuthorized());
 
   final AuthRepository authRepository;
+
+  Future<void> signIn({
+    required String username,
+    required String password
+  }) async {
+    emit(const AuthState.waiting());
+    try {
+      final UserEntity userEntity = await authRepository.signIn(
+          username: username,
+          password: password
+      );
+      emit(AuthState.authorized(userEntity));
+    } catch (error) {
+      emit(AuthState.error(error));
+    }
+  }
 }
