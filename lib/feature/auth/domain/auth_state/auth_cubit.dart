@@ -28,4 +28,22 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthState.error(error));
     }
   }
+
+  Future<void> signUp({
+    required String username,
+    required String email,
+    required String password
+  }) async {
+    emit(const AuthState.waiting());
+    try {
+      final UserEntity userEntity = await authRepository.signUp(
+          username: username,
+          email: email,
+          password: password
+      );
+      emit(AuthState.authorized(userEntity));
+    } catch (error) {
+      emit(AuthState.error(error));
+    }
+  }
 }
