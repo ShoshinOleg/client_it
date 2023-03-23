@@ -24,9 +24,15 @@ class NetworkAuthRepository implements AuthRepository {
   }
 
   @override
-  Future refreshToken({required String refreshToken}) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+  Future refreshToken({String? refreshToken}) async {
+    try {
+      final response = await dioContainer.dio.post(
+          "/auth/token/$refreshToken"
+      );
+      return UserDto.fromJson(response.data["data"]).toEntity();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
