@@ -5,15 +5,16 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:client_it/app/data/dio_container.dart' as _i7;
+import 'package:client_it/app/data/dio_app_api.dart' as _i8;
 import 'package:client_it/app/data/main_app_config.dart' as _i4;
+import 'package:client_it/app/domain/app_api.dart' as _i7;
 import 'package:client_it/app/domain/app_config.dart' as _i3;
 import 'package:client_it/feature/auth/data/repositories/mock_auth_repository.dart'
     as _i6;
 import 'package:client_it/feature/auth/data/repositories/network_auth_repository.dart'
-    as _i8;
-import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart'
     as _i9;
+import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart'
+    as _i10;
 import 'package:client_it/feature/auth/domain/repositories/auth_repository.dart'
     as _i5;
 import 'package:get_it/get_it.dart' as _i1;
@@ -52,12 +53,12 @@ extension GetItInjectableX on _i1.GetIt {
       () => _i6.MockAuthRepository(),
       registerFor: {_test},
     );
-    gh.singleton<_i7.DioContainer>(_i7.DioContainer(gh<_i3.AppConfig>()));
+    gh.singleton<_i7.AppApi>(_i8.DioAppApi(gh<_i3.AppConfig>()));
     gh.factory<_i5.AuthRepository>(
-      () => _i8.NetworkAuthRepository(gh<_i7.DioContainer>()),
+      () => _i9.NetworkAuthRepository(gh<_i7.AppApi>()),
       registerFor: {_prod},
     );
-    gh.singleton<_i9.AuthCubit>(_i9.AuthCubit(gh<_i5.AuthRepository>()));
+    gh.singleton<_i10.AuthCubit>(_i10.AuthCubit(gh<_i5.AuthRepository>()));
     return this;
   }
 }
