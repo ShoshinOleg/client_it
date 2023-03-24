@@ -1,4 +1,5 @@
 import 'package:client_it/app/domain/error_entity/error_entity.dart';
+import 'package:client_it/app/ui/components/app_snack_bar.dart';
 import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,26 +33,12 @@ class AuthBuilder extends StatelessWidget {
       ),
       listener: (context, state) {
         state.whenOrNull(
-          error: (error) => _showSnackBar(
+          error: (error) => AppSnackBar.showSnackBarWithError(
               context,
               ErrorEntity.fromException(error)
           )
         );
       },
-    );
-  }
-
-  void _showSnackBar(BuildContext buildContext, ErrorEntity error) {
-    ScaffoldMessenger.of(buildContext).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 5),
-        content: SingleChildScrollView(
-          child: Text(
-            maxLines: 5,
-            "Error: ${error.errorMessage}, Message: ${error.message}"
-          ),
-        )
-      )
     );
   }
 }

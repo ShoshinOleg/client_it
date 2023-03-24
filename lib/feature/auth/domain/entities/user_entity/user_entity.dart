@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_entity.freezed.dart';
@@ -10,7 +11,9 @@ class UserEntity with _$UserEntity {
     required String username,
     required String id,
     String? accessToken,
-    String? refreshToken
+    String? refreshToken,
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    AsyncSnapshot? userState
 }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>
