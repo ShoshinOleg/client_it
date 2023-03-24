@@ -78,7 +78,11 @@ class UserScreen extends StatelessWidget {
                   children: [
                     ElevatedButton(
                         onPressed: () {
-
+                          showDialog(
+                              context: context,
+                              builder:
+                                  (context) => const _UserUpdatePasswordDialog()
+                          );
                         },
                         child: const Text("Обновить пароль")
                     ),
@@ -136,6 +140,55 @@ class _UserUpdateDialogState extends State<_UserUpdateDialog> {
               context.read<AuthCubit>().userUpdate(
                 email: emailController.text,
                 username: usernameController.text
+              );
+            },
+            text: "Применить"
+        )
+      ],
+    );
+  }
+}
+
+class _UserUpdatePasswordDialog extends StatefulWidget {
+  const _UserUpdatePasswordDialog({Key? key}) : super(key: key);
+
+  @override
+  State<_UserUpdatePasswordDialog> createState() =>
+      _UserUpdatePasswordDialogState();
+}
+
+class _UserUpdatePasswordDialogState extends State<_UserUpdatePasswordDialog> {
+  final oldPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      contentPadding: const EdgeInsets.all(16),
+      children: [
+        AppTextField(
+          controller: oldPasswordController,
+          labelText: "old password"
+        ),
+        const SizedBox(height: 16),
+        AppTextField(
+          controller: newPasswordController,
+          labelText: "new password"
+        ),
+        const SizedBox(height: 16),
+        AppTextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<AuthCubit>().passwordUpdate(
+                oldPassword: oldPasswordController.text,
+                newPassword: newPasswordController.text
               );
             },
             text: "Применить"

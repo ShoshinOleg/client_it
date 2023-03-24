@@ -1,3 +1,4 @@
+import 'package:client_it/app/domain/error_entity/error_entity.dart';
 import 'package:client_it/feature/auth/domain/entities/user_entity/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -96,6 +97,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
   }) async {
     try {
       _updateUserState(const AsyncSnapshot.waiting());
+      Future.delayed(const Duration(seconds: 1));
       final isEmptyEmail = email?.trim().isEmpty ?? false;
       final isEmptyUsername = username?.trim().isEmpty ?? false;
 
@@ -120,6 +122,28 @@ class AuthCubit extends HydratedCubit<AuthState> {
               "Успешная операция"
           )
       );
+    } catch (error) {
+      _updateUserState(AsyncSnapshot.withError(ConnectionState.done, error));
+    }
+  }
+
+  Future<void> passwordUpdate({
+    required String oldPassword,
+    required String newPassword
+  }) async {
+    try {
+      _updateUserState(const AsyncSnapshot.waiting());
+      Future.delayed(const Duration(seconds: 1));
+
+      if (newPassword.trim().isEmpty == true) {
+        throw ErrorEntity(message: "Новый пароль не может быть пустым");
+      }
+
+      final message = await authRepository.passwordUpdate(
+        oldPassword: oldPassword,
+        newPassword: newPassword
+      );
+      _updateUserState(AsyncSnapshot.withData(ConnectionState.done, message));
     } catch (error) {
       _updateUserState(AsyncSnapshot.withError(ConnectionState.done, error));
     }
