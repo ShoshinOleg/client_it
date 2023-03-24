@@ -83,12 +83,21 @@ class DioAppApi implements AppApi {
 
   @override
   Future<Response> userUpdate({String? username, String? email}) {
-    // TODO: implement userUpdate
-    throw UnimplementedError();
+    try {
+      return dio.put(
+          "/auth/user",
+          data: {
+            "username": username,
+            "email": email,
+          }
+      );
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
-  Future<dynamic> request(String path, {required data, required queryParameters}) {
-    return dio.request(path, data: data, queryParameters: queryParameters);
+  Future fetch(RequestOptions requestOptions) {
+    return dio.fetch(requestOptions);
   }
 }

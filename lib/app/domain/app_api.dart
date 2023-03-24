@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 abstract class AppApi {
   Future<dynamic> signUp({
     required String username,
@@ -26,11 +28,5 @@ abstract class AppApi {
     String? refreshToken
   });
 
-  Future<dynamic> request(
-      String path,
-      {
-        required data,
-        required queryParameters
-      }
-  );
+  Future<dynamic> fetch(RequestOptions requestOptions);
 }
