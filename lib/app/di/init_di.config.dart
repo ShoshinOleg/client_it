@@ -12,6 +12,8 @@ import 'package:client_it/feature/auth/data/repositories/mock_auth_repository.da
     as _i6;
 import 'package:client_it/feature/auth/data/repositories/network_auth_repository.dart'
     as _i8;
+import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart'
+    as _i9;
 import 'package:client_it/feature/auth/domain/repositories/auth_repository.dart'
     as _i5;
 import 'package:get_it/get_it.dart' as _i1;
@@ -55,6 +57,7 @@ extension GetItInjectableX on _i1.GetIt {
       () => _i8.NetworkAuthRepository(gh<_i7.DioContainer>()),
       registerFor: {_prod},
     );
+    gh.singleton<_i9.AuthCubit>(_i9.AuthCubit(gh<_i5.AuthRepository>()));
     return this;
   }
 }

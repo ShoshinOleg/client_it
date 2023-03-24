@@ -2,7 +2,6 @@ import 'package:client_it/app/di/init_di.dart';
 import 'package:client_it/app/domain/app_builder.dart';
 import 'package:client_it/app/ui/root_screen.dart';
 import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart';
-import 'package:client_it/feature/auth/domain/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,7 +28,7 @@ class _GlobalProviders extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => AuthCubit(locator<AuthRepository>())
+              create: (context) => locator.get<AuthCubit>()
           )
         ],
         child: child

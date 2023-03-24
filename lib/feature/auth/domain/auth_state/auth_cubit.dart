@@ -1,6 +1,7 @@
 import 'package:client_it/feature/auth/domain/entities/user_entity/user_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../repositories/auth_repository.dart';
 
@@ -8,6 +9,7 @@ part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 part 'auth_cubit.g.dart';
 
+@Singleton(order: 1)
 class AuthCubit extends HydratedCubit<AuthState> {
 
   AuthCubit(this.authRepository): super(const AuthState.notAuthorized());
@@ -56,6 +58,25 @@ class AuthCubit extends HydratedCubit<AuthState> {
           refreshToken: refreshToken
       );
       emit(AuthState.authorized(userEntity));
+    } catch (error, st) {
+      addError(error, st);
+    }
+  }
+
+  Future<void> getProfile() async {
+    try {
+      final UserEntity newUserEntity = await authRepository.getProfile();
+      emit(
+          state.maybeWhen(
+            orElse: () => state,
+            authorized: (userEntity) => AuthState.authorized(
+                userEntity.copyWith(
+                  email: newUserEntity.email,
+                  username: newUserEntity.username
+                )
+            )
+          )
+      );
     } catch (error, st) {
       addError(error, st);
     }

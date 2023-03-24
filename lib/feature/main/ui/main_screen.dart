@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => context.read<AuthCubit>().refreshToken(),
+            onPressed: () => context.read<AuthCubit>().getProfile(),
           ),
           IconButton(
               icon: const Icon(Icons.exit_to_app),

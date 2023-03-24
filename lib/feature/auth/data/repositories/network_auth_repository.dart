@@ -12,9 +12,13 @@ class NetworkAuthRepository implements AuthRepository {
   NetworkAuthRepository(this.dioContainer);
 
   @override
-  Future getProfile() {
-    // TODO: implement getProfile
-    throw UnimplementedError();
+  Future<UserEntity> getProfile() async {
+    try {
+      final response = await dioContainer.dio.get("/auth/user");
+      return UserDto.fromJson(response.data["data"]).toEntity();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
