@@ -82,6 +82,34 @@ class AuthCubit extends HydratedCubit<AuthState> {
     }
   }
 
+  Future<void> userUpdate({
+    String? email,
+    String? username
+  }) async {
+    try {
+      final isEmptyEmail = email?.trim().isEmpty ?? false;
+      final isEmptyUsername = username?.trim().isEmpty ?? false;
+
+      final UserEntity newUserEntity = await authRepository.userUpdate(
+        email: isEmptyEmail ? null : email,
+        username: isEmptyUsername ? null : username,
+      );
+      emit(
+          state.maybeWhen(
+              orElse: () => state,
+              authorized: (userEntity) => AuthState.authorized(
+                  userEntity.copyWith(
+                      email: newUserEntity.email,
+                      username: newUserEntity.username
+                  )
+              )
+          )
+      );
+    } catch (error, st) {
+      addError(error, st);
+    }
+  }
+
   void logout() => emit(const AuthState.notAuthorized());
 
   @override

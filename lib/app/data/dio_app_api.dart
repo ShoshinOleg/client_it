@@ -18,7 +18,15 @@ class DioAppApi implements AppApi {
         connectTimeout: const Duration(seconds: 15)
     );
     dio = Dio(options);
-    if (kDebugMode) dio.interceptors.add(PrettyDioLogger());
+    if (kDebugMode) {
+      dio.interceptors.add(
+          PrettyDioLogger(
+            requestHeader: true,
+            requestBody: true,
+            responseHeader: true
+          )
+      );
+    }
     dio.interceptors.add(AuthInterceptor());
   }
 
@@ -84,7 +92,7 @@ class DioAppApi implements AppApi {
   @override
   Future<Response> userUpdate({String? username, String? email}) {
     try {
-      return dio.put(
+      return dio.post(
           "/auth/user",
           data: {
             "username": username,

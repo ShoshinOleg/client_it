@@ -1,7 +1,8 @@
+import 'package:client_it/app/ui/components/app_text_button.dart';
+import 'package:client_it/app/ui/components/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../domain/auth_state/auth_cubit.dart';
-import '../domain/entities/user_entity/user_entity.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -37,9 +38,11 @@ class UserScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 16),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(userEntity?.username ?? ""),
-                        Text(userEntity?.email ?? ""),
+                        Text(userEntity?.username ?? "", textAlign: TextAlign.start,),
+                        Text(userEntity?.email ?? "", textAlign: TextAlign.start,),
                       ],
                     )
                   ],
@@ -57,7 +60,10 @@ class UserScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     ElevatedButton(
                         onPressed: () {
-
+                          showDialog(
+                              context: context,
+                              builder: (context) => const _UserUpdateDialog()
+                          );
                         },
                         child: const Text("Обновить данные")
                     ),
@@ -71,3 +77,45 @@ class UserScreen extends StatelessWidget {
     );
   }
 }
+
+class _UserUpdateDialog extends StatefulWidget {
+  const _UserUpdateDialog({Key? key}) : super(key: key);
+
+  @override
+  State<_UserUpdateDialog> createState() => _UserUpdateDialogState();
+}
+
+class _UserUpdateDialogState extends State<_UserUpdateDialog> {
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    usernameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      contentPadding: const EdgeInsets.all(16),
+      children: [
+        AppTextField(controller: usernameController, labelText: "username"),
+        const SizedBox(height: 16),
+        AppTextField(controller: emailController, labelText: "email"),
+        const SizedBox(height: 16),
+        AppTextButton(
+            onPressed: () {
+              context.read<AuthCubit>().userUpdate(
+                email: emailController.text,
+                username: usernameController.text
+              );
+            },
+            text: "Применить"
+        )
+      ],
+    );
+  }
+}
+
