@@ -30,6 +30,7 @@ class PostCubit extends HydratedCubit<PostState> {
   late final StreamSubscription authSubscription;
 
   Future<void> fetchPosts() async {
+    emit(state.copyWith(asyncSnapshot: const AsyncSnapshot.waiting()));
     await repository.fetchPosts()
       .then((value) {
         final Iterable iterable = value;
@@ -46,6 +47,16 @@ class PostCubit extends HydratedCubit<PostState> {
       .catchError((error) {
         addError(error);
       });
+  }
+
+  Future<void> createPost(Map args) async {
+    await repository.createPost(args)
+        .then((value) {
+      fetchPosts();
+    })
+        .catchError((error) {
+      addError(error);
+    });
   }
 
   void logout() {
