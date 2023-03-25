@@ -5,6 +5,7 @@ import 'package:client_it/app/ui/components/app_text_button.dart';
 import 'package:client_it/app/ui/components/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../posts/domain/cubit/post_cubit.dart';
 import '../domain/auth_state/auth_cubit.dart';
 
 class UserScreen extends StatelessWidget {
