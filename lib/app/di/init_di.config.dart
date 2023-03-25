@@ -14,9 +14,13 @@ import 'package:client_it/feature/auth/data/repositories/mock_auth_repository.da
 import 'package:client_it/feature/auth/data/repositories/network_auth_repository.dart'
     as _i9;
 import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart'
-    as _i10;
+    as _i12;
 import 'package:client_it/feature/auth/domain/repositories/auth_repository.dart'
     as _i5;
+import 'package:client_it/feature/posts/data/repositories/net_post_repository.dart'
+    as _i11;
+import 'package:client_it/feature/posts/domain/repositories/post_repository.dart'
+    as _i10;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -58,7 +62,11 @@ extension GetItInjectableX on _i1.GetIt {
       () => _i9.NetworkAuthRepository(gh<_i7.AppApi>()),
       registerFor: {_prod},
     );
-    gh.singleton<_i10.AuthCubit>(_i10.AuthCubit(gh<_i5.AuthRepository>()));
+    gh.factory<_i10.PostRepository>(
+      () => _i11.NetPostRepository(gh<_i7.AppApi>()),
+      registerFor: {_prod},
+    );
+    gh.singleton<_i12.AuthCubit>(_i12.AuthCubit(gh<_i5.AuthRepository>()));
     return this;
   }
 }

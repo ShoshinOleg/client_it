@@ -1,7 +1,6 @@
-import 'package:client_it/feature/auth/domain/auth_state/auth_cubit.dart';
 import 'package:client_it/feature/auth/ui/user_screen.dart';
+import 'package:client_it/feature/posts/ui/post_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../auth/domain/entities/user_entity/user_entity.dart';
 
@@ -28,10 +27,7 @@ class MainScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [],
-      )
+      body: const PostList()
     );
   }
 }
