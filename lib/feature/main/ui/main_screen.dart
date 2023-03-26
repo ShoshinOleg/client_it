@@ -22,19 +22,20 @@ class MainScreen extends StatelessWidget {
             icon: const Icon(Icons.add_circle),
             onPressed: () {
               showDialog(
-                  context: context,
-                  builder: (context) => AppDialog(
-                      val1: "name",
-                      val2: "content",
-                      onPressed: (name, content) {
-                        context.read<PostCubit>().createPost(
-                          {
-                            "name": name,
-                            "content": content
-                          }
-                        );
+                context: context,
+                builder: (context) => AppDialog(
+                  val1: "name",
+                  val2: "content",
+                  onPressed: (name, content) {
+                    context.read<PostBloc>()
+                    .add(PostEvent.createPost(
+                      {
+                        "name": name,
+                        "content": content
                       }
-                  )
+                    ));
+                  }
+                )
               );
             },
           ),

@@ -9,18 +9,29 @@ class PostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PostCubit, PostState>(
+    return BlocConsumer<PostBloc, PostState>(
       listener: (context, state) {
         // TODO: implement listener
       },
       builder: (context, state) {
         if (state.postList.isNotEmpty) {
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: state.postList.length,
-            itemBuilder: (context, index) {
-              return PostItem(postEntity: state.postList[index]);
-            }
+          return NotificationListener<ScrollEndNotification>(
+            onNotification: (notification) {
+              if (notification.metrics.maxScrollExtent ==
+                  notification.metrics.pixels) {
+                context.read<PostBloc>().add(PostEvent.fetch());
+                print(notification);
+                return true;
+              }
+              return false;
+            },
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: state.postList.length,
+              itemBuilder: (context, index) {
+                return PostItem(postEntity: state.postList[index]);
+              }
+            ),
           );
         }
         if (state.asyncSnapshot?.connectionState == ConnectionState.waiting) {

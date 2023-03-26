@@ -5,9 +5,8 @@ class PostState with _$PostState {
   const factory PostState({
     @JsonKey(includeToJson: false, includeFromJson: false)
     AsyncSnapshot? asyncSnapshot,
-    @Default([]) List<PostEntity> postList
+    @Default([]) List<PostEntity> postList,
+    @Default(10) int fetchLimit,
+    @Default(0) int offset,
   }) = _PostState;
-
-  factory PostState.fromJson(Map<String, dynamic> json) =>
-      _$PostStateFromJson(json);
 }

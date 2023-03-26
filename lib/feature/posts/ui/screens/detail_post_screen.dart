@@ -8,6 +8,8 @@ import 'package:client_it/feature/posts/domain/state/detail_post/detail_post_cub
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/state/cubit/post_cubit.dart';
+
 class DetailPostScreen extends StatelessWidget {
   const DetailPostScreen({Key? key, required this.id}) : super(key: key);
 
@@ -34,6 +36,7 @@ class _DetailPostView extends StatelessWidget {
           IconButton(
             onPressed: () {
               context.read<DetailPostCubit>().deletePost().then((_) {
+                context.read<PostBloc>().add(PostEvent.fetch());
                 Navigator.of(context).pop();
               });
             },

@@ -28,7 +28,7 @@ abstract class AppApi {
     String? refreshToken
   });
 
-  Future<dynamic> fetchPosts();
+  Future<dynamic> fetchPosts(int fetchLimit, int offset);
 
   Future<dynamic> createPost(Map args);
 
