@@ -35,4 +35,9 @@ class NetPostRepository implements PostRepository {
     final response = await api.fetchPost(id);
     return PostEntity.fromJson(response.data["data"]);
   }
+
+  @override
+  Future deletePost(String id) async {
+    await api.deletePost(id);
+  }
 }

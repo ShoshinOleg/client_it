@@ -29,20 +29,37 @@ class _DetailPostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<DetailPostCubit>().deletePost().then((_) {
+                Navigator.of(context).pop();
+              });
+            },
+            icon: const Icon(Icons.delete)
+          )
+        ],
+      ),
       body: BlocConsumer<DetailPostCubit, DetailPostState>(
         builder: (context, state) {
-          if (state.postEntity != null) {
-            return _DetailPostItem(postEntity: state.postEntity!);
-          }
           if (state.asyncSnapshot.connectionState == ConnectionState.waiting) {
             return const AppLoader();
+          }
+          if (state.postEntity != null) {
+            return _DetailPostItem(postEntity: state.postEntity!);
           }
           return const Center(
             child: Text("Что-то пошло не так"),
           );
         },
         listener: (context, state) {
+          if (state.asyncSnapshot.hasData) {
+            AppSnackBar.showSnackBarWithMessage(
+              context,
+              state.asyncSnapshot.data.toString()
+            );
+          }
           if (state.asyncSnapshot.hasError) {
             AppSnackBar.showSnackBarWithError(
               context,
