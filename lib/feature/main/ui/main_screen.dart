@@ -1,11 +1,11 @@
 import 'package:client_it/app/ui/components/app_dialog.dart';
 import 'package:client_it/feature/auth/ui/user_screen.dart';
-import 'package:client_it/feature/posts/domain/cubit/post_cubit.dart';
-import 'package:client_it/feature/posts/ui/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../auth/domain/entities/user_entity/user_entity.dart';
+import '../../posts/domain/state/cubit/post_cubit.dart';
+import '../../posts/ui/components/post/post_list.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key, required this.userEntity}) : super(key: key);

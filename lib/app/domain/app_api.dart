@@ -32,5 +32,7 @@ abstract class AppApi {
 
   Future<dynamic> createPost(Map args);
 
+  Future<dynamic> fetchPost(String id);
+
   Future<dynamic> fetch(RequestOptions requestOptions);
 }

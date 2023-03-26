@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import '../../../auth/domain/auth_state/auth_cubit.dart';
-import '../entity/post/post_entity.dart';
+import '../../../../auth/domain/auth_state/auth_cubit.dart';
+import '../../entity/post/post_entity.dart';
+
 
 part 'post_state.dart';
 part 'post_cubit.freezed.dart';

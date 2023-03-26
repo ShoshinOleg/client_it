@@ -1,4 +1,5 @@
 import 'package:client_it/app/domain/app_api.dart';
+import 'package:client_it/feature/posts/domain/entity/post/post_entity.dart';
 import 'package:client_it/feature/posts/domain/repositories/post_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,5 +28,11 @@ class NetPostRepository implements PostRepository {
     } catch(error) {
       rethrow;
     }
+  }
+
+  @override
+  Future fetchPost(String id) async {
+    final response = await api.fetchPost(id);
+    return PostEntity.fromJson(response.data["data"]);
   }
 }
